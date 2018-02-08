@@ -30,10 +30,6 @@ $app->withEloquent();
 $app->configure('auth');
 $app->configure('facebook');
 
-// $app->withFacades();
-
-// $app->withEloquent();
-
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -86,6 +82,7 @@ $app->singleton(
 |
 */
 
+$app->register(App\Providers\AppServiceProvider::class);
 $app->register(Laravel\Passport\PassportServiceProvider::class);
 $app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
 $app->register(Danjdewhurst\PassportFacebookLogin\FacebookLoginGrantProvider::class);
@@ -101,12 +98,10 @@ $app->register(Danjdewhurst\PassportFacebookLogin\FacebookLoginGrantProvider::cl
 |
 */
 
-Dusterio\LumenPassport\LumenPassport::routes($app);
-
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {
-    require __DIR__.'/../routes/web.php';
+    require __DIR__.'/../routes/api.php';
 });
 
 return $app;

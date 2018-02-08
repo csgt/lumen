@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Dusterio\LumenPassport\LumenPassport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,11 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        
     }
 
     public function boot()
     {
-        Dusterio\LumenPassport\LumenPassport::routes($this->app);
+        LumenPassport::routes($this->app->router);
     }
 }
