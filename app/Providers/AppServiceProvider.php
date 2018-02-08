@@ -15,4 +15,9 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+
+    public function boot()
+    {
+        Dusterio\LumenPassport\LumenPassport::routes($this->app);
+    }
 }

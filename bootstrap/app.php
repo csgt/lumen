@@ -23,6 +23,13 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
+$app->withFacades();
+
+$app->withEloquent();
+
+$app->configure('auth');
+$app->configure('facebook');
+
 // $app->withFacades();
 
 // $app->withEloquent();
@@ -63,9 +70,10 @@ $app->singleton(
 //    App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+ $app->routeMiddleware([
+     'auth'    => App\Http\Middleware\Authenticate::class,
+     'jsonify' => App\Http\Middleware\Jsonify::class,
+ ]);
 
 /*
 |--------------------------------------------------------------------------
@@ -78,9 +86,9 @@ $app->singleton(
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
+$app->register(Laravel\Passport\PassportServiceProvider::class);
+$app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
+$app->register(Danjdewhurst\PassportFacebookLogin\FacebookLoginGrantProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +100,8 @@ $app->singleton(
 | can respond to, as well as the controllers that may handle them.
 |
 */
+
+Dusterio\LumenPassport\LumenPassport::routes($app);
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
